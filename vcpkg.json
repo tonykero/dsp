@@ -1,0 +1,15 @@
+{
+    "name": "dsp",
+    "version": "0.1.0",
+    "dependencies": [
+        {
+            "name": "fftw3",
+            "platform": "(x64)"
+        },
+        {
+            "name": "matplotplusplus",
+            "features": [ "fftw","opengl" ],
+            "platform":"(x64)"
+        }
+    ]
+}
