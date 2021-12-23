@@ -1,11 +1,21 @@
 #include <cstdio>
 #include <fftw3.h>
 #include "viz.hpp"
+#include "dft.h"
 
 
 void print_complex(fftw_complex* arr, size_t len) {
     for(int i = 0; i < len; i++) {
         printf("%f + %fi\n", arr[i][0], arr[i][1]);
+    }
+}
+
+void print_mat(fftw_complex* m, size_t cols, size_t rows) {
+    for(size_t i = 0; i < rows; i++) {
+        for(size_t j = 0; j < cols; j++) {
+            printf("%f + %fi \t", m[i*cols + j][0],m[i*cols + j][1]);
+        }
+        printf("\n");
     }
 }
 
@@ -30,7 +40,7 @@ bool equal(fftw_complex* arr1, fftw_complex* arr2, size_t len, double eps = 10e-
 
 int main() {
     const size_t N = 32;
-    fftw_complex *in, *out;
+    fftw_complex *in, *out_ref, *out;
     
     in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
     for(int i = 0; i < N; i++) {
@@ -38,18 +48,20 @@ int main() {
     }
     in[1][0] = 5;
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
-    fftw_dft(in,out,N);
-
-    print_complex(out,N);
+    out_ref = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
+    fftw_dft(in,out_ref,N);
+    naive_dft(in,out,N);
 
     //plot_complex(in,N);
     //plot_complex(out,N);
     //plot_fft(out,N);
+    plot_fft_signal(out_ref,N);
     plot_fft_signal(out,N);
 
-    equal(out,out,N);
-    
+    equal(out,out_ref,N);
+
     fftw_free(in);
     fftw_free(out);
+    fftw_free(out_ref);
     return 0;
 }
