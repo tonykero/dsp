@@ -7,6 +7,11 @@ fftw_complex* cadd(fftw_complex* a, fftw_complex* b) {
     (*a)[1] += (*b)[1];
     return a;
 }
+fftw_complex* csub(fftw_complex* a, fftw_complex* b) {
+    (*a)[0] -= (*b)[0];
+    (*a)[1] -= (*b)[1];
+    return a;
+}
 
 fftw_complex* cmul(fftw_complex* a, fftw_complex* b) {
     double ac = (*a)[0] * (*b)[0];
@@ -51,4 +56,35 @@ void naive_dft(fftw_complex* in, fftw_complex* out, size_t len) {
     }
 
     matmul(&dft_mat[0], len,len,in,1,len,out);
+    fftw_free(dft_mat);
+}
+
+void naive_dft_rad2_rec(fftw_complex* in, fftw_complex* out, size_t len, size_t stride) {
+    if(len == 1) {
+        out[0][0] = in[0][0];
+        out[0][1] = in[0][1];
+    } else {
+        size_t half = len/2;
+        naive_dft_rad2_rec(in,out,half,2*stride);
+        naive_dft_rad2_rec(in+stride,out+half,half,2*stride);
+        for(int k = 0; k < half; k++) {
+            fftw_complex p1 = {out[k][0], out[k][1]};
+            fftw_complex p2 = {out[k][0], out[k][1]};
+            
+            double theta = -2.0 * M_PI * k / len;
+            fftw_complex q = {cos(theta), sin(theta)};
+            cmul(&q, out+k+half);
+            cadd(&p1, &q);
+            csub(&p2, &q);
+
+            out[k][0] = p1[0];
+            out[k][1] = p1[1];
+            out[k+half][0] = p2[0];
+            out[k+half][1] = p2[1];
+        }
+    }
+}
+
+void naive_dft_rad2(fftw_complex* in, fftw_complex* out, size_t len) {
+    naive_dft_rad2_rec(in,out,len,1);
 }
