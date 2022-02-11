@@ -24,8 +24,8 @@ int main() {
     out_ref = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
     fftw_dft(in,out_ref,N);
     //naive_dft(in,out,N);
-    naive_dft_rad2(in,out,N);
-
+    //naive_dft_rad2(in,out,N);
+    naive_dft_rad2_it(in,out,N);
     //plot_complex(in,N);
     //plot_complex(out,N);
     //plot_fft(out,N);
