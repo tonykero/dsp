@@ -21,7 +21,11 @@ project(dsp)
 
 find_package(FFTW3 REQUIRED)
 find_package(Matplot++ REQUIRED)
-set(SRCS "src/main.cpp")
+set(SRCS    "src/cx_math.cpp"
+            "src/naive.cpp"
+            "src/viz.cpp"
+            "src/utils.cpp"
+            "src/main.cpp")
 
 add_executable(dsp ${SRCS})
 target_include_directories(dsp PUBLIC "include")

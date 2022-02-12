@@ -1,12 +1,12 @@
 #include <cstdio>
 #include <fftw3.h>
 
-#include "utils.h"
+#include "dft.hpp"
+#include "utils.hpp"
 #include "viz.hpp"
-#include "dft.h"
 
 void fftw_dft(fftw_complex* in, fftw_complex* out, size_t len) {
-    fftw_plan p = fftw_plan_dft_1d(len, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+    fftw_plan p = fftw_plan_dft_1d((int)len, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
     fftw_execute(p);
     fftw_destroy_plan(p);
 }
@@ -23,7 +23,7 @@ int main() {
     in[10][0] = 3;
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
     out_ref = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
-    
+
     fftw_dft(in,out_ref,N);
     //naive_dft(in,out,N);
     //naive_dft_rad2(in,out,N);

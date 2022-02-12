@@ -8,7 +8,7 @@
         },
         {
             "name": "matplotplusplus",
-            "features": [ "fftw","opengl" ],
+            "features": [ "fftw" ],
             "platform":"(x64)"
         }
     ]

@@ -1,7 +1,4 @@
-#pragma once
-#include <fftw3.h>
-#include <stdio.h>
-#include <math.h>
+#include "utils.hpp"
 
 void print_complex(fftw_complex* arr, size_t len) {
     for(int i = 0; i < len; i++) {
@@ -18,7 +15,7 @@ void print_mat(fftw_complex* m, size_t cols, size_t rows) {
     }
 }
 
-bool equal(fftw_complex* arr1, fftw_complex* arr2, size_t len, double eps = 10e-5) {
+bool equal(fftw_complex* arr1, fftw_complex* arr2, size_t len, double eps) {
     int i = 0;
     while(i < len && fabs(arr1[i][0]-arr2[i][0]) < eps && fabs(arr1[i][1]-arr2[i][1]) < eps) i++;
 
