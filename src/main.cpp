@@ -20,17 +20,23 @@ int main() {
         in[i][0] = in[i][1] = 0.0;
     }
     in[1][0] = 5;
+    in[10][0] = 3;
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
     out_ref = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
+    
     fftw_dft(in,out_ref,N);
     //naive_dft(in,out,N);
     //naive_dft_rad2(in,out,N);
     naive_dft_rad2_it(in,out,N);
-    //plot_complex(in,N);
-    //plot_complex(out,N);
-    //plot_fft(out,N);
+
+    plot_fft(out,N);
+    matplot::show();
+    matplot::tiledlayout(2,1);
+    matplot::nexttile();
     plot_fft_signal(out_ref,N);
+    matplot::nexttile();
     plot_fft_signal(out,N);
+    matplot::show();
 
     equal(out,out_ref,N);
 

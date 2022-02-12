@@ -15,7 +15,6 @@ void plot_complex(fftw_complex* arr, size_t len) {
         y_data[1].push_back(im);
     }
     matplot::bar(y_data);
-    matplot::show();
 }
 
 void plot_fft(fftw_complex* arr, size_t len) {
@@ -29,7 +28,6 @@ void plot_fft(fftw_complex* arr, size_t len) {
         y_data[1].push_back(pha);
     }
     matplot::stem(y_data);
-    matplot::show();
 }
 
 void plot_fft_signal(fftw_complex* arr, size_t len, double os = 4.0) {
@@ -41,8 +39,6 @@ void plot_fft_signal(fftw_complex* arr, size_t len, double os = 4.0) {
             double re = arr[j][0];
             double im = arr[j][1];
             double x = 2.0 * M_PI * j * i_ / (double)len;
-            //y += re * cos(x);
-            //y -= im * sin(x);
 
             double mag = sqrt(re*re + im*im);
             double phi = atan2(im,re);
@@ -51,5 +47,4 @@ void plot_fft_signal(fftw_complex* arr, size_t len, double os = 4.0) {
         y_data.push_back(y / (len/2.0));
     }
     matplot::stem(y_data);
-    matplot::show();
 }
