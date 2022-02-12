@@ -117,7 +117,7 @@ void naive_dft_rad2_it(fftw_complex* in, fftw_complex* out, size_t len) {
                 fftw_complex p1 = {out[b][0], out[b][1]};
                 fftw_complex p2 = {out[b][0], out[b][1]};
 
-                double theta = -2.0 * M_PI * k / len;
+                double theta = -2.0 * M_PI * k / s;
                 fftw_complex q = {cos(theta), sin(theta)};
 
                 cmul(&q, out+b+half);
